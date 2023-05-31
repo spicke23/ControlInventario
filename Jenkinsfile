@@ -35,20 +35,15 @@ pipeline {
             }
         }
 
-    stage('Sonar Scanner') {
-        steps {
-            script {
-                def sonarqubeScannerHome = tool name: 'sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                withCredentials([string(credentialsId: 'sonar', variable: 'sonarLogin')]) {
-                    sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://SonarQube:9000 -Dsonar.login=${sonarLogin} -Dsonar.projectName=mv-maven -Dsonar.projectVersion=${env.BUILD_NUMBER} -Dsonar.projectKey=GS -Dsonar.sources="src/test/java/com/kibernumacademy/myapp" -Dsonar.tests="src/test/java/com/kibernumacademy/myapp" -Dsonar.language=java -Dsonar.java.binaries=."
+        stage('Sonar Scanner') {
+            steps {
+                script {
+                    def sonarqubeScannerHome = tool name: 'sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withCredentials([string(credentialsId: 'sonar', variable: 'sonarLogin')]) {
+                        sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://SonarQube:9000 -Dsonar.login=${sonarLogin} -Dsonar.projectName=mv-maven -Dsonar.projectVersion=${env.BUILD_NUMBER} -Dsonar.projectKey=GS -Dsonar.sources=src/test/java/com/kibernumacademy/myapp -Dsonar.tests=src/test/java/com/kibernumacademy/myapp -Dsonar.language=java -Dsonar.java.binaries=."
+                    }
                 }
             }
         }
-    }
-
-    //
-
-
-    //
     }
 }
